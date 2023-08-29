@@ -1,54 +1,57 @@
 class BankAccount:
     def __init__(self, account_number, account_holder):
-        # Initialize a BankAccount instance with an account number, account holder's name, and initial balance.
-        self.account_number = account_number
-        self.account_holder = account_holder
-        self.balance = 0.0
+        # Constructor to initialize a BankAccount instance.
+        self.account_number = account_number  # Store the account number.
+        self.account_holder = account_holder  # Store the account holder's name.
+        self.balance = 0.0  # Initialize the balance to zero.
 
     def deposit(self, amount):
-        # Deposit the given amount into the account's balance, if the amount is positive.
-        if amount > 0:
-            self.balance += amount
-            return True
-        return False
+        # Method to deposit funds into the account.
+        if amount > 0:  # Ensure the deposit amount is positive.
+            self.balance += amount  # Increase the balance by the deposit amount.
+            return True  # Return True to indicate successful deposit.
+        return False  # Return False for invalid deposit amount.
 
     def withdraw(self, amount):
-        # Withdraw the given amount from the account's balance, if the amount is positive and sufficient funds are available.
+        # Method to withdraw funds from the account.
         if amount > 0 and self.balance >= amount:
-            self.balance -= amount
-            return True
-        return False
+            # Ensure the withdrawal amount is positive and within available balance.
+            self.balance -= amount  # Decrease the balance by the withdrawal amount.
+            return True  # Return True to indicate successful withdrawal.
+        return False  # Return False for insufficient balance or invalid withdrawal.
 
     def get_balance(self):
-        # Return the current balance of the account.
-        return self.balance
+        # Method to retrieve the current balance.
+        return self.balance  # Return the current balance.
 
 class SavingsAccount(BankAccount):
     def __init__(self, account_number, account_holder):
-        # Initialize a SavingsAccount instance, inheriting from BankAccount, and set a default interest rate.
+        # Constructor to initialize a SavingsAccount instance, inheriting from BankAccount.
         super().__init__(account_number, account_holder)
-        self.interest_rate = 0.02
+        self.interest_rate = 0.02  # Set the default interest rate.
 
     def apply_interest(self):
-        # Apply interest to the account's balance based on the interest rate.
-        interest_amount = self.balance * self.interest_rate
-        self.balance += interest_amount
+        # Method to apply interest to the account balance.
+        interest_amount = self.balance * self.interest_rate  # Calculate interest amount.
+        self.balance += interest_amount  # Add interest to the balance.
 
 class CurrentAccount(BankAccount):
     def __init__(self, account_number, account_holder):
-        # Initialize a CurrentAccount instance, inheriting from BankAccount, and set an overdraft limit.
+        # Constructor to initialize a CurrentAccount instance, inheriting from BankAccount.
         super().__init__(account_number, account_holder)
-        self.overdraft_limit = 1000.0
+        self.overdraft_limit = 1000.0  # Set the overdraft limit.
 
     def overdraft_protection(self):
-        # Apply overdraft protection by setting balance to 0 if it's negative and within the overdraft limit.
+        # Method to apply overdraft protection if balance is within the limit.
         if self.balance < 0 and abs(self.balance) <= self.overdraft_limit:
-            self.balance = 0
-            return True
-        return False
+            # Check if balance is negative and within the overdraft limit.
+            self.balance = 0  # Set balance to zero to prevent further negative balance.
+            return True  # Return True to indicate successful overdraft protection.
+        return False  # Return False if no overdraft protection applied.
 
 def main():
-    accounts = {}
+    accounts = {}  # Dictionary to store account instances.
+
     while True:
         print("\n Banking Operations")
         print("1. Create Account")
@@ -79,7 +82,27 @@ def main():
             else:
                 print("Invalid account or deposit amount.")
 
-        # Other menu options (3, 4, and 5) can be similarly commented.
+        elif choice == "3":
+            # Withdraw money from an existing account based on user input.
+            account_number = input("Enter account number: ")
+            amount = float(input("Enter withdrawal amount: "))
+            if account_number in accounts and accounts[account_number].withdraw(amount):
+                print("Withdrawal successful.")
+            else:
+                print("Invalid account or insufficient balance.")
+
+        elif choice == "4":
+            # Check and display the balance of an existing account.
+            account_number = input("Enter account number: ")
+            if account_number in accounts:
+                balance = accounts[account_number].get_balance()
+                print(f"Account balance: {balance}")
+            else:
+                print("Invalid account.")
+
+        elif choice == "5":
+            print("Exiting the program.")
+            break
 
 if __name__ == "__main__":
     main()
