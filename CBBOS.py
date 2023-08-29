@@ -82,7 +82,7 @@ def main():
             else:
                 print("Invalid account or deposit amount.")
 
-            elif choice == "3":
+        elif choice == "3":
             # Withdraw money from an existing account based on user input.
             account_number = input("Enter account number: ")
             amount = float(input("Enter withdrawal amount: "))
