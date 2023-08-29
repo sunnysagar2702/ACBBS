@@ -58,7 +58,8 @@ def main():
         print("2. Deposit")
         print("3. Withdraw")
         print("4. Balance Inquiry")
-        print("5. Exit")
+        print("5. Fund transfer")
+        print("6. Exit")
         choice = input("Enter your choice: ")
 
         if choice == "1":
@@ -111,8 +112,30 @@ def main():
                 print(f"Account balance: {balance}")
             else:
                 print("Invalid account.")
-
+        
         elif choice == "5":
+            # Transfer funds between two existing accounts based on user input.
+            from_account_number = input("Enter your account number: ")
+            to_account_number = input("Enter recipient's account number: ")
+            amount = float(input("Enter transfer amount: "))
+            
+            if from_account_number in accounts and to_account_number in accounts:
+                from_account = accounts[from_account_number]
+                to_account = accounts[to_account_number]
+                
+                if from_account.withdraw(amount):
+                    if to_account.deposit(amount):
+                        print("Transfer successful.")
+                    else:
+                        # Rollback the withdrawal if deposit to the recipient fails.
+                        from_account.deposit(amount)
+                        print("Transfer failed due to recipient's account issue.")
+                else:
+                    print("Transfer failed due to insufficient balance.")
+            else:
+                print("Invalid account(s).")
+
+        elif choice == "6":
             print("Exiting the program.")
             break
 
