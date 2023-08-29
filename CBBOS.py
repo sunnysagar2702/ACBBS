@@ -82,14 +82,26 @@ def main():
             else:
                 print("Invalid account or deposit amount.")
 
-        elif choice == "3":
+            elif choice == "3":
             # Withdraw money from an existing account based on user input.
             account_number = input("Enter account number: ")
             amount = float(input("Enter withdrawal amount: "))
-            if account_number in accounts and accounts[account_number].withdraw(amount):
-                print("Withdrawal successful.")
+            if account_number in accounts:
+                account = accounts[account_number]  # Get the account instance
+                if isinstance(account, CurrentAccount):
+                    # If it's a CurrentAccount, apply overdraft protection if needed.
+                    if account.withdraw(amount):
+                        print("Withdrawal successful.")
+                    else:
+                        print("Invalid withdrawal amount or exceeded overdraft limit.")
+                else:
+                    # For SavingsAccount, perform a normal withdrawal.
+                    if account.withdraw(amount):
+                        print("Withdrawal successful.")
+                    else:
+                        print("Invalid withdrawal amount or insufficient balance.")
             else:
-                print("Invalid account or insufficient balance.")
+                print("Invalid account.")
 
         elif choice == "4":
             # Check and display the balance of an existing account.
