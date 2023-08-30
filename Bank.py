@@ -9,6 +9,7 @@ class BankAccount:
         # Method to deposit funds into the account.
         if amount > 0:  # Ensure the deposit amount is positive.
             self.balance += amount  # Increase the balance by the deposit amount.
+            print("Deposited ",amount," into account ",self.account_number,". Current balance: ",self.balance)
             return True  # Return True to indicate a successful deposit.
         return False  # Return False for an invalid deposit amount.
 
@@ -17,6 +18,7 @@ class BankAccount:
         if amount > 0 and self.balance >= amount:
             # Ensure the withdrawal amount is positive and within available balance.
             self.balance -= amount  # Decrease the balance by the withdrawal amount.
+            print("Withdrawn ",amount," from account ",self.account_number,". Current balance: ",self.balance)
             return True  # Return True to indicate a successful withdrawal.
         return False  # Return False for insufficient balance or an invalid withdrawal.
 
