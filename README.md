@@ -12,7 +12,7 @@ This is a simple command-line banking system written in Python. It allows users 
 
 ## Usage
 
-1. Run the program: `python CBBOS.py`
+1. Run the program: `python Bank.py`
 2. Choose from the available operations in the menu:
    - Create Account
    - Deposit
