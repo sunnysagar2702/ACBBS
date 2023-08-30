@@ -9,16 +9,16 @@ class BankAccount:
         # Method to deposit funds into the account.
         if amount > 0:  # Ensure the deposit amount is positive.
             self.balance += amount  # Increase the balance by the deposit amount.
-            return True  # Return True to indicate successful deposit.
-        return False  # Return False for invalid deposit amount.
+            return True  # Return True to indicate a successful deposit.
+        return False  # Return False for an invalid deposit amount.
 
     def withdraw(self, amount):
         # Method to withdraw funds from the account.
         if amount > 0 and self.balance >= amount:
             # Ensure the withdrawal amount is positive and within available balance.
             self.balance -= amount  # Decrease the balance by the withdrawal amount.
-            return True  # Return True to indicate successful withdrawal.
-        return False  # Return False for insufficient balance or invalid withdrawal.
+            return True  # Return True to indicate a successful withdrawal.
+        return False  # Return False for insufficient balance or an invalid withdrawal.
 
     def get_balance(self):
         # Method to retrieve the current balance.
@@ -39,15 +39,6 @@ class CurrentAccount(BankAccount):
     def __init__(self, account_number, account_holder):
         # Constructor to initialize a CurrentAccount instance, inheriting from BankAccount.
         super().__init__(account_number, account_holder)
-        self.overdraft_limit = 1000.0  # Set the overdraft limit.
-
-    def overdraft_protection(self):
-        # Method to apply overdraft protection if balance is within the limit.
-        if self.balance < 0 and abs(self.balance) <= self.overdraft_limit:
-            # Check if balance is negative and within the overdraft limit.
-            self.balance = 0  # Set balance to zero to prevent further negative balance.
-            return True  # Return True to indicate successful overdraft protection.
-        return False  # Return False if no overdraft protection applied.
 
 def main():
     accounts = {}  # Dictionary to store account instances.
@@ -89,18 +80,10 @@ def main():
             amount = float(input("Enter withdrawal amount: "))
             if account_number in accounts:
                 account = accounts[account_number]  # Get the account instance
-                if isinstance(account, CurrentAccount):
-                    # If it's a CurrentAccount, apply overdraft protection if needed.
-                    if account.withdraw(amount):
-                        print("Withdrawal successful.")
-                    else:
-                        print("Invalid withdrawal amount or exceeded overdraft limit.")
+                if account.withdraw(amount):
+                    print("Withdrawal successful.")
                 else:
-                    # For SavingsAccount, perform a normal withdrawal.
-                    if account.withdraw(amount):
-                        print("Withdrawal successful.")
-                    else:
-                        print("Invalid withdrawal amount or insufficient balance.")
+                    print("Invalid withdrawal amount or insufficient balance.")
             else:
                 print("Invalid account.")
 
