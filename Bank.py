@@ -60,8 +60,10 @@ def main():
             account_type = input("Enter account type (Savings or Current): ").lower()
             if account_type == "savings":
                 accounts[account_number] = SavingsAccount(account_number, account_holder)
+                 print("Account Creation Successful")
             elif account_type == "current":
                 accounts[account_number] = CurrentAccount(account_number, account_holder)
+                 print("Account Creation Successful")
             else:
                 print("Invalid account type.")
 
